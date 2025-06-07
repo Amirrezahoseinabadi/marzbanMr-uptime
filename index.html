@@ -7,7 +7,692 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* style.css content starts here */
+        :root {
+            --dark-bg: #1a1f2c;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --success-color: #40d15d;
+            --danger-color: #ff4444;
+            --primary-color: #3b82f6;
+        }
+
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        .header {
+            background-color: var(--dark-bg);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: right;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .status-overview {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-left: 1rem;
+            background-color: var(--success-color); /* Default to success */
+            flex-shrink: 0;
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .status-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+
+        .services-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            color: #333;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+            color: inherit;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02); /* Light background for dark theme */
+            margin-bottom: 0.5rem;
+        }
+
+        .service-item:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            min-width: 120px;
+            color: var(--text-color); /* Ensure text is visible on light background */
+        }
+
+        .service-uptime {
+            color: var(--text-color);
+        }
+
+        .service-status {
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-width: 100px;
+            text-align: left;
+            color: var(--success-color); /* Default */
+        }
+
+        .service-status.offline {
+            color: var(--danger-color);
+        }
+
+        .service-graph {
+            display: flex;
+            gap: 1px;
+            height: 24px;
+            width: 200px;
+            margin: 0 1.5rem;
+            border-radius: 4px;
+            overflow: hidden;
+            background: rgba(64, 209, 93, 0.1); /* Light green background for the graph */
+            padding: 2px;
+        }
+
+        .graph-bar {
+            flex: 1;
+            background-color: #e1e5f2; /* Light gray for inactive bars */
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graph-bar.active {
+            background-color: var(--success-color); /* Active color */
+        }
+
+        .graph-bar.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            15% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            85% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.85); opacity: 0.8; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+
+        .update-time {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            font-weight: 300;
+        }
+
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-right: auto;
+        }
+
+        .view-details-btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            margin-right: 1rem;
+            white-space: nowrap;
+        }
+
+        .view-details-btn::after {
+            content: "←";
+            margin-right: 0.4rem;
+            transform: scaleX(-1);
+            font-size: 1.1em;
+        }
+
+        .view-details-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .service-ip {
+            position: relative;
+            user-select: none;
+            transition: all 0.3s ease;
+            color: #333; /* Ensure text is visible on light background */
+        }
+
+        .service-ip:hover {
+            color: var(--primary-color);
+        }
+
+        .service-ip::after {
+            content: 'برای نمایش کامل کلیک کنید';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10; /* Ensure tooltip is above other elements */
+        }
+
+        .service-ip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: -30px;
+        }
+
+        /* Server Details Page Specific Styles */
+        .info-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-section {
+            background: #fff;
+            border-radius: 6px;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-subtitle::before {
+            content: "";
+            width: 2px;
+            height: 14px;
+            background: var(--primary-color);
+            border-radius: 1px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            min-height: 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .highlight {
+            background: #eef2ff;
+            border-right: 2px solid var(--primary-color);
+        }
+
+        .warning {
+            background: #fff7ed;
+            border-right: 2px solid #f97316;
+        }
+
+        .secure {
+            background: #f0fdf4;
+            border-right: 2px solid #22c55e;
+        }
+
+        .server-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .server-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .server-status-detail {
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot-detail {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+        }
+
+        .status-text-detail {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        .uptime-section {
+            margin-top: 1.5rem;
+        }
+
+        .uptime-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .uptime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .uptime-item {
+            background: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .uptime-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--success-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .uptime-label {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            margin-top: 2rem;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem;
+            }
+            
+            .header-title {
+                font-size: 1rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .main-content {
+                padding: 0.5rem;
+                margin: 0.5rem auto;
+            }
+            
+            .status-overview {
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .status-dot {
+                margin: 0 0 0.75rem 0;
+                width: 24px;
+                height: 24px;
+            }
+            
+            .status-text {
+                font-size: 1rem;
+            }
+            
+            .status-description {
+                font-size: 0.8rem;
+            }
+            
+            .services-section {
+                padding: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .service-item {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 1rem;
+                text-align: center;
+            }
+            
+            .service-name {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+            }
+            
+            .service-graph {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .service-info {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+                align-items: center;
+                margin: 0;
+            }
+            
+            .service-ip {
+                grid-column: 1 / -1;
+                text-align: center;
+            }
+            
+            .service-uptime, .service-status {
+                text-align: center;
+                margin: 0;
+            }
+            
+            .view-details-btn {
+                grid-column: 1 / -1;
+                margin: 0.5rem 0 0 0;
+                justify-content: center;
+            }
+            
+            .service-ip::after {
+                display: none;
+            }
+
+            /* Server Details Page */
+            .server-info {
+                padding: 1rem;
+            }
+            
+            .server-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .server-name {
+                font-size: 1.2rem;
+            }
+            
+            .server-status-detail {
+                margin-right: 0;
+            }
+            
+            .info-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 0.5rem;
+            }
+            
+            .info-item {
+                padding: 0.5rem;
+            }
+            
+            .info-label {
+                font-size: 0.75rem;
+            }
+            
+            .info-value {
+                font-size: 0.8rem;
+            }
+            
+            .uptime-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .uptime-item {
+                padding: 0.5rem;
+            }
+            
+            .uptime-value {
+                font-size: 1rem;
+            }
+            
+            .uptime-label {
+                font-size: 0.75rem;
+            }
+            
+            .back-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+
+            .info-sections {
+                gap: 0.75rem;
+            }
+            
+            .info-section {
+                padding: 0.75rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .info-item {
+                padding: 0.6rem;
+                min-height: 60px;
+            }
+            
+            .section-subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .info-label {
+                font-size: 0.7rem;
+            }
+            
+            .info-value {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-sections {
+                gap: 0.5rem;
+            }
+            
+            .info-section {
+                padding: 0.75rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .info-item {
+                padding: 0.5rem;
+                min-height: 55px;
+            }
+            
+            .section-subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .info-label {
+                font-size: 0.65rem;
+            }
+            
+            .info-value {
+                font-size: 0.75rem;
+            }
+        }
+        /* style.css content ends here */
+    </style>
 </head>
 <body>
     <header class="header">
@@ -37,6 +722,187 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+        /* script.js content starts here */
+        // script.js
+        const CLOUDFLARE_WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL'; // Replace with your actual Worker URL
+        // این URL باید با آدرس GitHub Pages شما جایگزین شود تا CORS کار کند
+        // مثلاً 'https://YOUR-GITHUB-USERNAME.github.io'
+        const GITHUB_PAGES_URL = 'https://YOUR-GITHUB-USERNAME.github.io'; // REPLACE THIS
+
+        function toPersianNumbers(str) {
+            const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return str.toString().replace(/[0-9]/g, w => persianNumbers[w]);
+        }
+
+        function maskIP(ip) {
+            if (!ip) return '';
+            const parts = ip.split('.');
+            if (parts.length !== 4) return ip; // Return original if not a valid IPv4
+            return parts[0] + '.' + '****' + '.' + parts[2] + '.' + parts[3];
+        }
+
+        // Function to generate individual server item HTML
+        function generateServerItemHtml(server) {
+            const uptimeHistory = server.history || Array(90).fill(1); // Default to all online if no history
+            const barsHtml = uptimeHistory.map(status =>
+                `<div class="graph-bar ${status === 1 ? 'active' : ''}"></div>`
+            ).join('');
+
+            const statusClass = server.status === 'online' ? '' : 'offline';
+
+            return `
+                <div class="service-item">
+                    <div class="service-name">${server.name}</div>
+                    <div class="service-graph" id="graph-${server.ip}">
+                        ${barsHtml}
+                    </div>
+                    <div class="service-info">
+                        <div class="service-ip" data-full-ip="${server.ip}" style="direction: ltr; font-family: monospace; cursor: pointer;">
+                            ${maskIP(server.ip)}
+                        </div>
+                        <div class="service-uptime" id="uptime-${server.ip}">${toPersianNumbers(parseFloat(server.uptime).toFixed(1))}%</div>
+                        <div class="service-status ${statusClass}" id="status-${server.ip}">${server.status === 'online' ? 'فعال' : 'غیرفعال'}</div>
+                        <a href="${CLOUDFLARE_WORKER_URL}/server/${encodeURIComponent(server.ip)}" class="view-details-btn">
+                            جزئیات
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Main function to update status
+        async function updateStatus() {
+            try {
+                const response = await fetch(`${CLOUDFLARE_WORKER_URL}/api/status`);
+                const data = await response.json();
+
+                const serversContainer = document.getElementById('servers-container');
+                serversContainer.innerHTML = ''; // Clear previous content
+
+                let allOperational = true;
+                
+                // Sort servers alphabetically by name before rendering
+                const sortedServers = Object.values(data).sort((a, b) => a.name.localeCompare(b.name));
+
+                if (sortedServers.length === 0) {
+                    serversContainer.innerHTML = '<p style="text-align: center; color: #64748b;">هیچ سروری برای نمایش وجود ندارد.</p>';
+                    allOperational = false; // If no servers, overall status isn't operational
+                } else {
+                    sortedServers.forEach(server => {
+                        serversContainer.innerHTML += generateServerItemHtml(server);
+                        if (server.status !== 'online') {
+                            allOperational = false;
+                        }
+                    });
+                }
+
+                // Update overall status
+                const overallStatusDot = document.getElementById('overall-status-dot');
+                const overallStatusText = document.getElementById('overall-status-text');
+                const overallStatusDescription = document.getElementById('overall-status-description');
+
+                if (allOperational) {
+                    overallStatusDot.style.backgroundColor = 'var(--success-color)';
+                    overallStatusText.innerHTML = 'فعال و پایدار';
+                    overallStatusDescription.textContent = 'تمامی سرورها در حال سرویس‌دهی هستند و عملکرد مطلوبی دارند.';
+                } else {
+                    overallStatusDot.style.backgroundColor = 'var(--danger-color)';
+                    overallStatusText.innerHTML = 'برخی سرورها <span style="color: var(--danger-color);">غیرفعال</span> هستند';
+                    overallStatusDescription.textContent = 'لطفاً برای جزئیات بیشتر وضعیت هر سرور را بررسی کنید.';
+                }
+
+                // Update last update time
+                document.getElementById('last-update').textContent = toPersianNumbers(new Date().toLocaleString('fa-IR'));
+
+                // Re-attach IP click listeners for dynamically added elements
+                attachIpClickListeners();
+                updateGraphAnimations();
+
+            } catch (error) {
+                console.error('Error fetching server status:', error);
+                document.getElementById('servers-container').innerHTML = `
+                    <p style="text-align: center; color: var(--danger-color);">خطا در دریافت وضعیت سرورها. لطفا بعدا تلاش کنید.</p>
+                `;
+                document.getElementById('overall-status-dot').style.backgroundColor = 'var(--danger-color)';
+                document.getElementById('overall-status-text').innerHTML = 'خطا در اتصال';
+                document.getElementById('overall-status-description').textContent = 'مشکلی در ارتباط با سرور پایش رخ داده است.';
+                document.getElementById('last-update').textContent = toPersianNumbers(new Date().toLocaleString('fa-IR') + ' (خطا)');
+            }
+        }
+
+        // Function to update graph animations and colors
+        function updateGraphAnimations() {
+            document.querySelectorAll('.service-graph').forEach(graph => {
+                const bars = graph.querySelectorAll('.graph-bar');
+                bars.forEach((bar, index) => {
+                    // Check if the bar is active based on its class
+                    if (bar.classList.contains('active')) {
+                        // Apply subtle animation if active
+                        const randomHeight = Math.random() * 0.1 + 0.9; // 90% to 100% scale
+                        const randomDelay = index * 30; // Delay for wave effect
+                        
+                        setTimeout(() => {
+                            bar.style.transform = `scaleY(${randomHeight})`;
+                            bar.style.animation = `pulse 2s infinite ${randomDelay}ms`; // Re-apply animation
+                            bar.style.backgroundColor = generateGreenShade(); // Update color
+                        }, randomDelay);
+                    } else {
+                        // Ensure inactive bars are visually distinct and not animated
+                        bar.style.backgroundColor = '#e1e5f2'; // Light gray
+                        bar.style.transform = 'scaleY(1)'; // Reset scale
+                        bar.style.animation = 'none'; // Remove animation
+                    }
+                });
+            });
+        }
+
+        // Function to generate different shades of green for active bars
+        function generateGreenShade() {
+            const baseHue = 135; // Green
+            const randomHue = baseHue + (Math.random() * 20 - 10);
+            const saturation = 60 + Math.random() * 20;
+            const lightness = 45 + Math.random() * 15;
+            return `hsl(${randomHue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        // Attach IP click listeners
+        function attachIpClickListeners() {
+            document.querySelectorAll('.service-ip').forEach(ipElement => {
+                // Remove existing listener to prevent duplicates
+                ipElement.removeEventListener('click', handleIpClick); 
+                ipElement.addEventListener('click', handleIpClick);
+            });
+        }
+
+        function handleIpClick(e) {
+            e.preventDefault();
+            let isRevealed = this.dataset.isRevealed === 'true'; // Get current state
+            const fullIP = this.getAttribute('data-full-ip');
+            const maskedIP = maskIP(fullIP);
+            
+            isRevealed = !isRevealed; // Toggle state
+            this.dataset.isRevealed = isRevealed; // Store new state
+            
+            if (isRevealed) {
+                this.textContent = fullIP;
+                this.style.color = 'var(--primary-color)';
+                this.style.fontWeight = '600';
+            } else {
+                this.textContent = maskedIP;
+                this.style.color = '';
+                this.style.fontWeight = '';
+            }
+        }
+
+
+        // Initial update and periodic updates
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatus();
+            setInterval(updateStatus, 30000); // Update every 30 seconds
+            setInterval(updateGraphAnimations, 1000); // Update animations every 1 second
+        });
+        /* script.js content ends here */
+    </script>
 </body>
 </html>
