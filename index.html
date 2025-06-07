@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه پایش | آپتایم آقای مرزبان</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">سامانه پایش سرورها | آپتایم مرزبان</h1>
+        <div class="header-subtitle">پایش لحظه‌ای وضعیت سرورها و خدمات شبکه</div>
+    </header>
+
+    <main class="main-content">
+        <div class="status-overview">
+            <div class="status-dot" id="overall-status-dot"></div>
+            <div>
+                <div class="status-text">وضعیت کلی سیستم: <span id="overall-status-text">در حال بررسی...</span></div>
+                <div class="status-description" id="overall-status-description"></div>
+            </div>
+        </div>
+        
+        <div class="services-section">
+            <h2 class="section-title">وضعیت سرورها</h2>
+            <div id="servers-container">
+                <!-- Server items will be dynamically loaded here by script.js -->
+                <p style="text-align: center; color: #64748b;">در حال بارگذاری وضعیت سرورها...</p>
+            </div>
+        </div>
+        
+        <div class="update-time">
+            آخرین به‌روزرسانی: <span id="last-update">در حال دریافت...</span>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
